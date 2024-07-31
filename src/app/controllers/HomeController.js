@@ -1,8 +1,17 @@
+const User = require ('../models/User')
+const  {multipleMongooseToObject} = require('../../utils/mongoose')
 class NewsController{
-
     // [GET] /
-    home(req, res){
-        res.render('home')
+    // get all user
+    home(req, res, next){
+        User.find({})
+            .then(users => {
+                res.render(('pages/home/home'), {
+                    users: multipleMongooseToObject(users)
+                })
+            })
+            // .then(users => res.json(users))
+            .catch(next)
     }
 }
 
